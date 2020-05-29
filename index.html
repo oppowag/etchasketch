@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Etch-a-Sketch</title>
+	<link rel = "stylesheet" href = "style.css">
+</head>
+
+<body>
+	<div style = "font-size: 2em; text-align: center; margin-bottom: 1em">Etch-a-Sketch</div>
+
+	<div style = "text-align: center; margin-bottom: 2em"><button id = "reset">Start over</button></div>
+	
+	<div class = "container"></div>
+
+	<script>
+		var totalGrid = 9;
+		document.body.onload = createPage(totalGrid);
+
+		function createPage(gridCount){
+			// create grid container and set number of columns
+			var gridContainer = document.createElement("div");
+			gridContainer.setAttribute("class", "grid-container");
+			var totalColumns = "grid-template-columns: repeat(" + Math.sqrt(totalGrid) + ", auto);";
+			gridContainer.setAttribute("style", totalColumns);
+
+			// create grid items and append to container
+			for (i = 0; i < totalGrid; i++){
+				var gridItem = document.createElement("div");
+				gridItem.setAttribute("class", "grid-item");
+				gridContainer.appendChild(gridItem);
+			}
+
+			// append it all back to container
+			document.getElementsByClassName("container")[0].appendChild(gridContainer);
+			addEL();
+		}
+
+		// highlight grid when moused over
+		function addEL(){
+			var selectedGrid = document.getElementsByClassName("grid-item");
+			for (i = 0; i < totalGrid; i++){
+				selectedGrid[i].addEventListener("mouseover", function(){
+					this.setAttribute("style", "background-color: purple;");
+				});
+			}
+		}
+
+
+		// check for button click and prompt for grid columns
+		document.getElementById("reset").onclick = function(){
+			var userInput = prompt("Input number grid columns");
+			totalGrid = Math.pow(userInput, 2);
+
+			//reset page and create new one with specified number of grid items
+			document.getElementsByClassName("grid-container")[0].remove();
+			createPage(totalGrid);
+		};
+
+	</script>
+</body>
+</html>
